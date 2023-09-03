@@ -7,7 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.evka.takeandremember.R
 
-class TodoListAdapter(private val items: List<String>) : RecyclerView.Adapter<TodoListItemHolder>() {
+class TodoListAdapter(items: List<String> = ArrayList()) : RecyclerView.Adapter<TodoListItemHolder>() {
+    var items: List<String> = items
+        set(value) {
+            field = value
+            this.notifyDataSetChanged()
+        }
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListItemHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.list_item, parent, false)
