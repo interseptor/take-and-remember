@@ -1,23 +1,61 @@
 package ru.evka.takeandremember.compose
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import ru.evka.takeandremember.data.TodoItem
 import ru.evka.takeandremember.ui.TakeAndRememberTheme
+import ru.evka.takeandremember.viewmodels.TodoListViewModel
 
 @Composable
 fun TakeAndRememberApp(
-    data: List<String> = ArrayList()
+    viewModel: TodoListViewModel = hiltViewModel()
+) {
+    val todoItems by viewModel.todoItems.observeAsState(initial = emptyList())
+    TakeAndRememberApp(
+        todoItems = todoItems,
+        onAddTodoItemClick = { viewModel.addTodoItem() }
+    )
+}
+
+@Composable
+fun TakeAndRememberApp(
+    todoItems: List<TodoItem>,
+    onAddTodoItemClick: () -> Unit = {}
 ) {
     LazyColumn {
-        items(data) { message ->
-            Text(
-                text = "::$message",
-                color = MaterialTheme.colorScheme.primary
-            )
+        item {
+            Button(onAddTodoItemClick) {
+                Text(
+                    text = "Add todo item",
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
+        items(todoItems) { item ->
+            Row {
+                Text(
+                    text = "${item.name}",
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = item.description,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
         }
     }
 }
@@ -27,7 +65,7 @@ fun TakeAndRememberApp(
 private fun TakeAndRememberAppPreview() {
     TakeAndRememberTheme {
         TakeAndRememberApp(
-            data = List(10) { "Item #$it" }
+            todoItems = List(10) { TodoItem("Item #$it", "Description $it", "") }
         )
     }
 }

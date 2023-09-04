@@ -2,44 +2,51 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
-  namespace = "ru.evka.takeandremember"
-  compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "ru.evka.takeandremember"
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
-  defaultConfig {
-    applicationId = "ru.evka.takeandremember"
-    minSdk = libs.versions.minSdk.get().toInt()
-    targetSdk = libs.versions.targetSdk.get().toInt()
-    versionCode = 1
-    versionName = "1.0"
+    defaultConfig {
+        applicationId = "ru.evka.takeandremember"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = 1
+        versionName = "1.0"
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-  buildTypes {
-    release {
-        isMinifyEnabled = true
-        proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["dagger.hilt.disableModulesHaveInstallInCheck"] = "true"
+            }
+        }
     }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_17.toString()
-  }
-  buildFeatures {
-    compose = true
-    viewBinding = true
-    dataBinding = true
-  }
 
-  composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-  }
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+    buildFeatures {
+        compose = true
+        viewBinding = true
+        dataBinding = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
 }
 
 dependencies {
