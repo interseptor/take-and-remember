@@ -12,6 +12,8 @@ class TodoItemRepository @Inject constructor(
         todoItemDao.insertTodoItem(gardenPlanting)
     }
 
+    fun getTodoItem(id: Long) = todoItemDao.getTodoItem(id)
+
     suspend fun removeTodoItem(todoItem: TodoItem) {
         todoItemDao.deleteTodoItem(todoItem)
     }

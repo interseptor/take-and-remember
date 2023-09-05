@@ -1,71 +1,45 @@
 package ru.evka.takeandremember.compose
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import ru.evka.takeandremember.data.TodoItem
-import ru.evka.takeandremember.ui.TakeAndRememberTheme
-import ru.evka.takeandremember.viewmodels.TodoListViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import ru.evka.takeandremember.compose.todoitemdetail.TodoItemDetailScreen
+import ru.evka.takeandremember.compose.todolist.TodoListScreen
 
 @Composable
-fun TakeAndRememberApp(
-    viewModel: TodoListViewModel = hiltViewModel()
-) {
-    val todoItems by viewModel.todoItems.observeAsState(initial = emptyList())
-    TakeAndRememberApp(
-        todoItems = todoItems,
-        onAddTodoItemClick = { viewModel.addTodoItem() }
+fun TakeAndRememberApp() {
+    val navController = rememberNavController()
+    TakeAndRememberNavHost(
+        navController
     )
 }
 
 @Composable
-fun TakeAndRememberApp(
-    todoItems: List<TodoItem>,
-    onAddTodoItemClick: () -> Unit = {}
+fun TakeAndRememberNavHost(
+    navController: NavHostController
 ) {
-    LazyColumn {
-        item {
-            Button(onAddTodoItemClick) {
-                Text(
-                    text = "Add todo item",
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
+    //val activity = (LocalContext.current as Activity)
+    NavHost(navController = navController, startDestination = "todolist") {
+        composable("todolist") {
+            TodoListScreen(
+                onTodoItemClick = {
+                    navController.navigate("todoItemDetail/${it.id}")
+                }
+            )
         }
-        items(todoItems) { item ->
-            Row {
-                Text(
-                    text = "${item.name}",
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = item.description,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
+        composable(
+            "todoItemDetail/{todoItemId}",
+            arguments = listOf(navArgument("todoItemId") {
+                type = NavType.LongType
+            })
+        ) {
+            TodoItemDetailScreen(
+                onBackClick = { navController.navigateUp() }
+            )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun TakeAndRememberAppPreview() {
-    TakeAndRememberTheme {
-        TakeAndRememberApp(
-            todoItems = List(10) { TodoItem("Item #$it", "Description $it", "") }
-        )
     }
 }
