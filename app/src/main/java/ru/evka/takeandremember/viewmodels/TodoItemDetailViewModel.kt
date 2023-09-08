@@ -1,11 +1,13 @@
 package ru.evka.takeandremember.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ru.evka.takeandremember.data.TodoItem
 import ru.evka.takeandremember.data.TodoItemRepository
 import javax.inject.Inject
 
@@ -16,8 +18,13 @@ class TodoItemDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     val todoItemId: Long = savedStateHandle.get<Long>(TODO_ITEM_ID_SAVED_STATE_KEY)!!
-
     val todoItem = todoItemRepository.getTodoItem(todoItemId).asLiveData()
+
+    fun updateTodoItem(todoItem: TodoItem) {
+        viewModelScope.launch {
+            todoItemRepository.updateTodoItem(todoItem)
+        }
+    }
 
     fun deleteTodoItem() {
         viewModelScope.launch {

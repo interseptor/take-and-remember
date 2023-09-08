@@ -25,7 +25,7 @@ import ru.evka.takeandremember.utilities.DATABASE_NAME
 /**
  * The Room database for this app
  */
-@Database(entities = [TodoItem::class], version = 1, exportSchema = false)
+@Database(entities = [TodoItem::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun todoItemDao(): TodoItemDao
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.evka.takeandremember.data.TodoItem
+import ru.evka.takeandremember.data.TodoItemType
 import ru.evka.takeandremember.ui.TakeAndRememberTheme
 import ru.evka.takeandremember.viewmodels.TodoListViewModel
 
@@ -70,7 +71,7 @@ fun TodoListScreen(
 private fun TodoListScreenPreview() {
     TakeAndRememberTheme {
         TodoListScreen(
-            todoItems = List(10) { TodoItem("Item #$it", "Description $it", "") }
+            todoItems = List(10) { TodoItem("Item #$it", "Description $it", TodoItemType.singleAction, "", 0, 0, 0) }
         )
     }
 }

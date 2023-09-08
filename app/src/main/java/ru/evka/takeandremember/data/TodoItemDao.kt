@@ -17,6 +17,9 @@ interface TodoItemDao {
     @Insert
     suspend fun insertTodoItem(todoItem: TodoItem): Long
 
+    @Update
+    suspend fun updateTodoItem(todoItem: TodoItem)
+
     @Delete
     suspend fun deleteTodoItem(todoItem: TodoItem)
 }

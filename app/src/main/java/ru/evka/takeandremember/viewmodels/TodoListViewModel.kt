@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.evka.takeandremember.data.TodoItem
 import ru.evka.takeandremember.data.TodoItemRepository
+import ru.evka.takeandremember.data.TodoItemType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,7 @@ class TodoListViewModel @Inject internal constructor(
     fun addTodoItem() {
         viewModelScope.launch {
             val index = todoItems.value?.size
-            todoItemRepository.createTodoItem("Item #$index", "Description", "")
+            todoItemRepository.createTodoItem("Item #$index", "Description", TodoItemType.singleAction, "", 0, 0, 0)
         }
     }
 }
