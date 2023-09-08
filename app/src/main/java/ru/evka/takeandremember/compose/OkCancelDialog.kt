@@ -9,13 +9,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import ru.evka.takeandremember.R
+import ru.evka.takeandremember.ui.TakeAndRememberTheme
 
 @Composable
-fun TimePickerDialog(
-    title: String = "Select Time",
+fun OkCancelDialog(
+    title: String = "Dialog title",
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     toggle: @Composable () -> Unit = {},
@@ -59,12 +63,22 @@ fun TimePickerDialog(
                     Spacer(modifier = Modifier.weight(1f))
                     TextButton(
                         onClick = onCancel
-                    ) { Text("Cancel") }
+                    ) { Text(stringResource(R.string.cancel_button)) }
                     TextButton(
                         onClick = onConfirm
-                    ) { Text("OK") }
+                    ) { Text(stringResource(R.string.ok_button)) }
                 }
             }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun OkCancelDialogPreview() {
+    TakeAndRememberTheme {
+        OkCancelDialog("Dialog title", {}, {}) {
+            Text("Dialog content")
         }
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Бери и Помни</string>
+    <string name="add_item_button">Добавить напоминание</string>
+    <string name="single_action_type">Одиночное событие</string>
+    <string name="repeating_action_type">Повторяющееся событие</string>
+    <string name="start_date_field">Дата начала</string>
+    <string name="start_time_field">Время начала</string>
+    <string name="duration_field">Продолжительность</string>
+    <string name="back_button">Назад</string>
+    <string name="delete_button">Удалить</string>
+    <string name="ok_button">Подтвердить</string>
+    <string name="cancel_button">Отмена</string>
+    <string name="select_time_dialog_title">Выберите время начала</string>
+    <string name="enter_duration_in_minutes">Введите продолжительность в минутах</string>
+</resources>

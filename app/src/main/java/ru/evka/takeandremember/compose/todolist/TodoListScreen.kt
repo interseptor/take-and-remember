@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ru.evka.takeandremember.R
 import ru.evka.takeandremember.data.TodoItem
 import ru.evka.takeandremember.data.TodoItemType
 import ru.evka.takeandremember.ui.TakeAndRememberTheme
@@ -45,8 +47,7 @@ fun TodoListScreen(
         item {
             Button(onAddTodoItemClick) {
                 Text(
-                    text = "Add todo item",
-                    color = MaterialTheme.colorScheme.error
+                    text = stringResource(R.string.add_item_button)
                 )
             }
         }
